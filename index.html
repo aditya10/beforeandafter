@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FUTC's Instagram Before and After Tool</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo-container">
+                <image src="images/logo.svg" alt="FUTC Logo" class="logo" width="100" height="100">
+            </div>
+            <h1>FUTC's Instagram Before and After Tool</h1>
+            <p class="subtitle">Create before/after videos for your edits</p>
+        </header>
+
+        <div class="main-content">
+            <div class="tool-section">
+                <h2 style="margin-bottom: 2rem; color: #333;">Create Your Video</h2>
+                
+                <div class="upload-section">
+                    <div class="upload-box" id="beforeUpload">
+                        <div class="upload-icon">📷</div>
+                        <h3>Before Image</h3>
+                        <p>Click to upload your original image</p>
+                        <input type="file" id="beforeInput" accept="image/*" style="display: none;">
+                        <img id="beforePreview" class="upload-preview" style="display: none;">
+                    </div>
+                    
+                    <div class="upload-box" id="afterUpload">
+                        <div class="upload-icon">✨</div>
+                        <h3>After Image</h3>
+                        <p>Click to upload your edited image</p>
+                        <input type="file" id="afterInput" accept="image/*" style="display: none;">
+                        <img id="afterPreview" class="upload-preview" style="display: none;">
+                    </div>
+                </div>
+
+                <div class="controls">
+                    <div class="control-group">
+                        <h3>Aspect Ratio</h3>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="aspectRatio" value="9x16" checked>
+                                <span>9:16 Story (2160×3840)</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="aspectRatio" value="4x5">
+                                <span>4:5 Post (2160×2700)</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <h3>Options</h3>
+                        <label class="checkbox-option">
+                            <input type="checkbox" id="addText">
+                            <span>Add "LR Presets Linked in Bio" text</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button class="generate-btn" id="generateBtn" disabled>
+                    Generate Video
+                </button>
+
+                <div class="loading-spinner" id="loadingSpinner"></div>
+                <div class="status-message" id="statusMessage"></div>
+
+                <div class="preview-section" id="previewSection" style="display: none;">
+                    <h3 style="margin-bottom: 1rem;">Preview</h3>
+                    <video id="previewVideo" class="preview-video" controls loop muted></video>
+                    <br>
+                    <button class="download-btn" id="downloadBtn">
+                        Download Video
+                    </button>
+                </div>
+            </div>
+
+            <div class="preset-card">
+                <div class="preset-image">
+                    <img src="images/presets.jpg" alt="FUTC Analog Vibes Vol. 2 Presets">
+                </div>
+                <h3 style="margin-bottom: 1rem; color: #333;">FUTC Analog Vibes Vol. 2 Presets</h3>
+                <p style="color: #666; margin-bottom: 1.5rem; line-height: 1.6;">
+                    Get the dreamy pastel film look digitally with Lightroom presets so good you'd think it's actually film.
+                </p>
+                <a href="https://futc.gumroad.com/l/analogvibes2/gnly6yf" target="_blank" rel="noopener">
+                    <button class="preset-btn">
+                        Check Them Out!
+                    </button>
+                </a>
+
+                <!-- Halationify section - initially hidden -->
+                <div class="app-section" id="appSection" style="display: none;">
+                    <div class="preset-image">
+                        <img src="images/halationify.jpg" alt="Halationify App">
+                    </div>
+                    <h3 style="margin-bottom: 1rem; color: #333;">Try the Halationify App</h3>
+                    <p style="color: #666; margin-bottom: 1.5rem; line-height: 1.6;">
+                        Add authentic film halations to your digital photos with the Halationify app. Now for iOS, iPadOS, and MacOS.
+                    </p>
+                    <a href="https://apps.apple.com/app/apple-store/id6739345616?pt=127502132&ct=beforeandafter&mt=8" target="_blank" rel="noopener">
+                        <button class="preset-btn">
+                            Try For Free!
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>&copy; 2025 FUTC. All rights reserved. All processing is done locally, your photos never leave your computer.</p>
+            <div class="footer-links">
+            <a href="https://instagram.com/futc.photography" class="footer-link" target="_blank" rel="noopener">
+                <img src="images/instagram-icon.svg" alt="Instagram" class="footer-icon">
+                Instagram
+            </a>
+            <a href="https://futc.de/datenschutz.html" class="footer-link" target="_blank" rel="noopener">Privacy Policy</a>
+            <a href="https://futc.de/impressum.html" class="footer-link" target="_blank" rel="noopener">Impressum</a>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
