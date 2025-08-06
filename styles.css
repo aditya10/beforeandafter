@@ -242,6 +242,77 @@ input[type="radio"], input[type="checkbox"] {
     accent-color: #667eea;
 }
 
+.speed-control {
+    margin-top: 0.5rem;
+}
+
+.speed-slider {
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: #e0e0e0;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+    margin-bottom: 0.5rem;
+}
+
+.speed-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #42b6c6;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease;
+}
+
+.speed-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+}
+
+.speed-slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #42b6c6;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.speed-labels {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+    color: #666;
+    position: relative;
+}
+
+.speed-labels span:first-child {
+    text-align: left;
+    flex: 1;
+}
+
+.speed-labels span:last-child {
+    text-align: right;
+    flex: 1;
+}
+
+#speedValue {
+    font-weight: 600;
+    color: #42b6c6;
+    text-align: center;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    padding: 0 8px;
+}
+
 .generate-btn {
     width: 100%;
     background: linear-gradient(45deg, #42b6c6, #ed625d);

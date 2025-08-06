@@ -24,6 +24,8 @@ class BeforeAfterVideoGenerator {
         this.previewSection = document.getElementById('previewSection');
         this.previewVideo = document.getElementById('previewVideo');
         this.downloadBtn = document.getElementById('downloadBtn');
+        this.speedSlider = document.getElementById('speedSlider');
+        this.speedValue = document.getElementById('speedValue');
     }
 
     bindEvents() {
@@ -35,6 +37,8 @@ class BeforeAfterVideoGenerator {
         
         this.generateBtn.addEventListener('click', () => this.generateVideo());
         this.downloadBtn.addEventListener('click', () => this.downloadVideo());
+        
+        this.speedSlider.addEventListener('input', () => this.updateSpeedValue());
     }
 
     handleImageUpload(event, type) {
@@ -69,6 +73,25 @@ class BeforeAfterVideoGenerator {
         if (canGenerate) {
             this.generateBtn.classList.add('pulse');
         }
+    }
+
+    updateSpeedValue() {
+        const speed = parseFloat(this.speedSlider.value);
+        let speedText;
+        
+        if (speed < 0.7) {
+            speedText = 'Slow';
+        } else if (speed < 0.9) {
+            speedText = 'Slower';
+        } else if (speed < 1.1) {
+            speedText = 'Normal';
+        } else if (speed < 1.3) {
+            speedText = 'Faster';
+        } else {
+            speedText = 'Fast';
+        }
+        
+        this.speedValue.textContent = speedText;
     }
 
     showStatus(message, type) {
@@ -125,6 +148,7 @@ class BeforeAfterVideoGenerator {
             const aspectRatio = document.querySelector('input[name="aspectRatio"]:checked').value;
             const addText = document.getElementById('addText').checked;
             const addBorder = document.getElementById('addBorder').checked;
+            const speed = parseFloat(this.speedSlider.value);
             
             const dimensions = aspectRatio === '9x16' 
                 ? { width: 2160, height: 3840 }
@@ -171,8 +195,13 @@ class BeforeAfterVideoGenerator {
             // Start recording
             this.mediaRecorder.start();
 
-            // Animate for 4 seconds (120 frames at 30fps) for smoother movement
-            await this.animateFrames(dimensions, addText, addBorder, 120);
+            // Calculate frames based on speed (base: 120 frames for 4 seconds at 30fps)
+            // Speed affects how many cycles the line completes, so we adjust frames accordingly
+            const baseFrames = 120;
+            const totalFrames = Math.round(baseFrames / speed);
+
+            // Animate with calculated frames
+            await this.animateFrames(dimensions, addText, addBorder, speed, totalFrames);
 
             // Stop recording
             this.mediaRecorder.stop();
@@ -185,7 +214,7 @@ class BeforeAfterVideoGenerator {
         }
     }
 
-    async animateFrames(dimensions, addText, addBorder, totalFrames) {
+    async animateFrames(dimensions, addText, addBorder, speed, totalFrames) {
         const margin = addBorder ? 100 : 0;
         const imageArea = {
             width: dimensions.width - (margin * 2),
@@ -223,7 +252,7 @@ class BeforeAfterVideoGenerator {
             // Using a cosine wave that starts and ends at 0 (left side)
             // This creates: left -> right -> left -> right -> left (perfectly looped)
             const normalizedTime = frame / totalFrames; // 0 to 1
-            const cycles = 2; // Number of complete back-and-forth cycles
+            const cycles = 2 * speed; // Number of complete back-and-forth cycles (adjusted by speed)
             const progress = (1 - Math.cos(normalizedTime * Math.PI * 2 * cycles)) / 2;
             const lineX = imgX + (imgWidth * progress);
 
