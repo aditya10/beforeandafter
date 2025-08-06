@@ -124,10 +124,13 @@ class BeforeAfterVideoGenerator {
             // Get settings
             const aspectRatio = document.querySelector('input[name="aspectRatio"]:checked').value;
             const addText = document.getElementById('addText').checked;
+            const addBorder = document.getElementById('addBorder').checked;
             
             const dimensions = aspectRatio === '9x16' 
                 ? { width: 2160, height: 3840 }
-                : { width: 2160, height: 2700 };
+                : aspectRatio === '4x5'
+                ? { width: 2160, height: 2700 }
+                : { width: 2160, height: 2880 };
 
             // Create canvas
             this.canvas = document.createElement('canvas');
@@ -169,7 +172,7 @@ class BeforeAfterVideoGenerator {
             this.mediaRecorder.start();
 
             // Animate for 4 seconds (120 frames at 30fps) for smoother movement
-            await this.animateFrames(dimensions, addText, 120);
+            await this.animateFrames(dimensions, addText, addBorder, 120);
 
             // Stop recording
             this.mediaRecorder.stop();
@@ -182,8 +185,8 @@ class BeforeAfterVideoGenerator {
         }
     }
 
-    async animateFrames(dimensions, addText, totalFrames) {
-        const margin = 100;
+    async animateFrames(dimensions, addText, addBorder, totalFrames) {
+        const margin = addBorder ? 100 : 0;
         const imageArea = {
             width: dimensions.width - (margin * 2),
             height: dimensions.height - (margin * 2) - (addText ? 150 : 0)
@@ -212,8 +215,8 @@ class BeforeAfterVideoGenerator {
         }
 
         for (let frame = 0; frame < totalFrames; frame++) {
-            // Clear canvas with white background
-            this.ctx.fillStyle = 'white';
+            // Clear canvas with appropriate background
+            this.ctx.fillStyle = addBorder ? 'white' : 'black';
             this.ctx.fillRect(0, 0, dimensions.width, dimensions.height);
 
             // Calculate line position for perfect looping
